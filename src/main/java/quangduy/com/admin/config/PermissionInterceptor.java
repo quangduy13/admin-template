@@ -10,7 +10,7 @@ import java.util.Arrays;
 
 public class PermissionInterceptor extends HandlerInterceptorAdapter {
     @Override
-    public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
+    public boolean preHandle(HttpServletRequest requests, HttpServletResponse response, Object handler) throws Exception {
 
         boolean flag = false;
 
@@ -19,7 +19,7 @@ public class PermissionInterceptor extends HandlerInterceptorAdapter {
         //Ignore check url
         flag = Arrays.stream(Constant.FunctionUrl.URL_PATTERN_IGNORE).anyMatch(urlPattern ->{
 
-           return handlerMapping.match(request, urlPattern) != null;
+           return handlerMapping.match(requests, urlPattern) != null;
         });
 
         //check url allow access
