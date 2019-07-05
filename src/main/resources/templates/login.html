@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" >
 <head>
     <meta charset="UTF-8">
     <title>Login</title>
@@ -9,6 +9,11 @@
 
     <script src="/js/jquery.min.js"></script>
     <script src="/js/bootstrap.min.js"></script>
+    <style>
+        .error-login{
+            color: red;
+        }
+    </style>
 </head>
 <body>
     <div >
@@ -22,14 +27,19 @@
 
                     <div class="signin-form">
                         <h2 class="form-title">Sign up</h2>
-                        <form method="POST" class="register-form" id="login-form">
+                        <form method="POST" th:action="@{/app-login}" id="login-form">
+                            <div th:if="${#request.getParameter('error')}">
+                                <div class="error-login">
+                                    Invalid username or password.
+                                </div>
+                            </div>
                             <div class="form-group">
                                 <label for="your_name"><i class="zmdi zmdi-account material-icons-name"></i></label>
-                                <input type="text" name="your_name" id="your_name" placeholder="Your Name" />
+                                <input type="text" name="username" id="username" placeholder="Username" />
                             </div>
                             <div class="form-group">
                                 <label for="your_pass"><i class="zmdi zmdi-lock"></i></label>
-                                <input type="password" name="your_pass" id="your_pass" placeholder="Password" />
+                                <input type="password" name="password" id="password" placeholder="Password" />
                             </div>
                             <div class="form-group">
                                 <input type="checkbox" name="remember-me" id="remember-me" class="agree-term" />
@@ -43,7 +53,13 @@
                             <span class="social-label">Or login with</span>
                             <ul class="socials">
                                 <li><a href="#"><i class="display-flex-center zmdi zmdi-facebook"></i></a></li>
-                                <li><a href="#"><i class="display-flex-center zmdi zmdi-google"></i></a></li>
+                                <li> <form th:action="@{/connect/google}" th:method="POST" style="display: inline">
+                                   <input type="hidden" name="scope" value="profile email" />
+                                   <button type="submit" class="btn btn-danger">
+                                       <i class="display-flex-center zmdi zmdi-google"></i>
+                                   </button>
+                                </form></li>
+
                             </ul>
                         </div>
                     </div>
